@@ -6,11 +6,16 @@
 /*   By: Jskehan <jskehan@student.42Berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 11:33:02 by Jskehan           #+#    #+#             */
-/*   Updated: 2024/04/22 16:31:49 by Jskehan          ###   ########.fr       */
+/*   Updated: 2024/04/22 19:16:44 by Jskehan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+int	convert_time_to_ms(struct timeval time)
+{
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+}
 
 int	ft_atoi(const char *str)
 {

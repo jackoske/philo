@@ -6,7 +6,7 @@
 /*   By: Jskehan <jskehan@student.42Berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 14:51:33 by Jskehan           #+#    #+#             */
-/*   Updated: 2024/04/22 17:43:46 by Jskehan          ###   ########.fr       */
+/*   Updated: 2024/04/22 20:10:53 by Jskehan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	think(t_philo *philo)
 	print_message(philo, "is thinking");
 }
 
-int	pick_up_forks(t_philo *philo)
+void	pick_up_forks(t_philo *philo)
 {
 	if (philo->id % 2)
 	{
@@ -33,17 +33,15 @@ int	pick_up_forks(t_philo *philo)
 		pthread_mutex_lock(&philo->left_fork->mutex);
 		print_message(philo, "has taken a fork");
 	}
-	return (0);
+	eat(philo);
 }
 
 void	eat(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->data->eat_mutex);
-	print_message(philo, "is eating");
 	gettimeofday(&philo->last_eat, NULL);
-	philo->eat_count++;
+	print_message(philo, "is eating");
 	ft_usleep_ms(philo->data->eat_time);
-	pthread_mutex_unlock(&philo->data->eat_mutex);
+	put_down_forks(philo);
 }
 
 void	put_down_forks(t_philo *philo)
@@ -58,6 +56,7 @@ void	put_down_forks(t_philo *philo)
 		pthread_mutex_unlock(&philo->right_fork->mutex);
 		pthread_mutex_unlock(&philo->left_fork->mutex);
 	}
+	sleep_philo(philo);
 }
 
 void	sleep_philo(t_philo *philo)

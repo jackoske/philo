@@ -6,37 +6,32 @@
 /*   By: Jskehan <jskehan@student.42Berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 11:52:36 by Jskehan           #+#    #+#             */
-/*   Updated: 2024/04/22 17:51:28 by Jskehan          ###   ########.fr       */
+/*   Updated: 2024/04/22 20:21:33 by Jskehan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
+static void	*handle_one_philo(t_philo *philo)
+{
+	print_message(philo, "is thinking");
+	print_message(philo, "has taken a fork");
+	ft_usleep_ms(philo->data->die_time);
+	print_message(philo, "died");
+	return (NULL);
+}
+
 static void	*philo_routine(void *arg)
 {
-	t_philo			*philo;
-	struct timeval	time;
+	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	while (!philo->data->dead)
+	if (philo->data->philo_count == 1)
+		return (handle_one_philo(philo));
+	while (!check_death(philo) && !check_if_philo_died(philo))
 	{
-		if (check_if_philo_died(philo) || check_death(philo))
-			break ;
 		think(philo);
-		if (check_if_philo_died(philo) || check_death(philo))
-			break ;
 		pick_up_forks(philo);
-		if (check_if_philo_died(philo) || check_death(philo))
-			break ;
-		eat(philo);
-		gettimeofday(&time, NULL);
-		philo->last_eat = time;
-		put_down_forks(philo);
-		if (check_if_philo_died(philo) || check_death(philo))
-			break ;
-		sleep_philo(philo);
-		if (check_if_philo_died(philo) || check_death(philo))
-			break ;
 	}
 	return (NULL);
 }
@@ -44,6 +39,7 @@ static void	*philo_routine(void *arg)
 int	start_simulation(t_data *data, t_philo *philos)
 {
 	int	i;
+	pthread_t monitor_thread;
 
 	i = -1;
 	while (++i < data->philo_count)
@@ -54,6 +50,11 @@ int	start_simulation(t_data *data, t_philo *philos)
 			return (1);
 		}
 	}
+	if (pthread_create(&monitor_thread, NULL, monitor_routine, philos))
+	{
+		printf("Error: Monitor thread creation failed\n");
+		return (1);
+	}
 	i = -1;
 	while (++i < data->philo_count)
 	{
@@ -62,6 +63,11 @@ int	start_simulation(t_data *data, t_philo *philos)
 			printf("Error: Thread join failed\n");
 			return (1);
 		}
+	}
+	if (pthread_join(monitor_thread, NULL))
+	{
+		printf("Error: Monitor thread join failed\n");
+		return (1);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: Jskehan <jskehan@student.42Berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 11:31:47 by Jskehan           #+#    #+#             */
-/*   Updated: 2024/04/22 17:13:57 by Jskehan          ###   ########.fr       */
+/*   Updated: 2024/04/22 19:18:42 by Jskehan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	init_data(t_data *data, int argc, char **argv)
 	data->eat_count = -1;
 	if (argc == 6)
 		data->eat_count = ft_atoi(argv[5]);
-	if (data->philo_count < 2 || data->die_time < 1 || data->eat_time < 1
+	if (data->philo_count < 1 || data->die_time < 1 || data->eat_time < 1
 		|| data->sleep_time < 1 || (argc == 6 && data->eat_count < 1))
 		return (1);
 	data->dead = 0;

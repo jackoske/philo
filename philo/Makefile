@@ -6,7 +6,7 @@
 #    By: Jskehan <jskehan@student.42Berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/20 10:38:25 by Jskehan           #+#    #+#              #
-#    Updated: 2024/04/22 16:09:16 by Jskehan          ###   ########.fr        #
+#    Updated: 2024/04/22 20:13:14 by Jskehan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRC = main.c \
 		routine.c \
 		routine_die.c \
 		print.c \
+		monitor.c \
 
 
 SRC := $(addprefix src/, $(SRC))
