@@ -6,7 +6,7 @@
 /*   By: Jskehan <jskehan@student.42Berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 11:33:02 by Jskehan           #+#    #+#             */
-/*   Updated: 2024/04/20 12:04:38 by Jskehan          ###   ########.fr       */
+/*   Updated: 2024/04/22 16:31:49 by Jskehan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,8 @@ int	ft_atoi(const char *str)
 		i++;
 	}
 	return (sign * nbr);
+}
+void	ft_usleep_ms(int ms)
+{
+	usleep(ms * 1000);
 }
