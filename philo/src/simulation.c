@@ -6,7 +6,7 @@
 /*   By: Jskehan <jskehan@student.42Berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 11:52:36 by Jskehan           #+#    #+#             */
-/*   Updated: 2024/04/22 20:21:33 by Jskehan          ###   ########.fr       */
+/*   Updated: 2024/04/23 11:24:42 by Jskehan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,13 @@ static void	*philo_routine(void *arg)
 	philo = (t_philo *)arg;
 	if (philo->data->philo_count == 1)
 		return (handle_one_philo(philo));
-	while (!check_death(philo) && !check_if_philo_died(philo))
+	while (!check_death(philo))
 	{
 		think(philo);
 		pick_up_forks(philo);
+		eat(philo);
+		put_down_forks(philo);
+		sleep_philo(philo);
 	}
 	return (NULL);
 }

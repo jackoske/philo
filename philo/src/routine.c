@@ -6,7 +6,7 @@
 /*   By: Jskehan <jskehan@student.42Berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 14:51:33 by Jskehan           #+#    #+#             */
-/*   Updated: 2024/04/22 20:10:53 by Jskehan          ###   ########.fr       */
+/*   Updated: 2024/04/23 10:04:29 by Jskehan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	pick_up_forks(t_philo *philo)
 		pthread_mutex_lock(&philo->left_fork->mutex);
 		print_message(philo, "has taken a fork");
 	}
-	eat(philo);
 }
 
 void	eat(t_philo *philo)
@@ -41,7 +40,6 @@ void	eat(t_philo *philo)
 	gettimeofday(&philo->last_eat, NULL);
 	print_message(philo, "is eating");
 	ft_usleep_ms(philo->data->eat_time);
-	put_down_forks(philo);
 }
 
 void	put_down_forks(t_philo *philo)
@@ -56,7 +54,6 @@ void	put_down_forks(t_philo *philo)
 		pthread_mutex_unlock(&philo->right_fork->mutex);
 		pthread_mutex_unlock(&philo->left_fork->mutex);
 	}
-	sleep_philo(philo);
 }
 
 void	sleep_philo(t_philo *philo)
