@@ -1,34 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   routine_parts.c                                    :+:      :+:    :+:   */
+/*   destroy.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Jskehan <jskehan@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/22 15:59:18 by Jskehan           #+#    #+#             */
-/*   Updated: 2024/05/03 16:54:36 by Jskehan          ###   ########.fr       */
+/*   Created: 2024/05/03 17:25:02 by Jskehan           #+#    #+#             */
+/*   Updated: 2024/05/03 17:30:04 by Jskehan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-void think(t_data *data)
+void	free_philos(t_philo *philos)
 {
-	print_message(data, "is thinking");
+	if (philos)
+		free(philos);
 }
 
-void eat(t_data *data, t_philo *philo)
+void	free_data(t_data *data)
 {
-	pick_up_forks(philo);
-	print_message(data, "is eating");
-	gettimeofday(&philo->last_eat, NULL);
-	philo->eat_count++;
-	ft_sleep_ms(data->eat_time);
-	put_down_forks(philo);
+	if (data->forks)
+		free(data->forks);
 }
 
-void philo_sleep(t_philo *philo)
+void	free_all(t_philo *philos, t_data *data)
 {
-	print_message(philo, "is sleeping");
-	ft_sleep_ms(data->sleep_time);
+	free_philos(philos);
+	free_data(data);
+}
+
+void	destroy_mutexes(t_data *data)
+{
+	int	i;
+
+	i = -1;
+	while (++i < data->philo_count)
+		pthread_mutex_destroy(&data->forks[i].mutex);
+	pthread_mutex_destroy(&data->dead_mutex);
+	pthread_mutex_destroy(&data->write_mutex);
 }

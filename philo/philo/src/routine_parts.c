@@ -5,30 +5,37 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: Jskehan <jskehan@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/22 15:59:18 by Jskehan           #+#    #+#             */
-/*   Updated: 2024/05/03 16:54:36 by Jskehan          ###   ########.fr       */
+/*   Created: 2024/04/22 14:51:33 by Jskehan           #+#    #+#             */
+/*   Updated: 2024/05/03 18:12:02 by Jskehan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-void think(t_data *data)
+void	think(t_philo *philo)
 {
-	print_message(data, "is thinking");
+	if (check_anyone_dead(philo) || check_death(philo))
+		return ;
+	print_message(philo, "is thinking");
 }
 
-void eat(t_data *data, t_philo *philo)
+
+void	eat(t_philo *philo)
 {
-	pick_up_forks(philo);
-	print_message(data, "is eating");
+	if (check_anyone_dead(philo) || check_death(philo))
+		return ;
 	gettimeofday(&philo->last_eat, NULL);
+	print_message(philo, "is eating");
 	philo->eat_count++;
-	ft_sleep_ms(data->eat_time);
-	put_down_forks(philo);
+	ft_usleep_ms(philo->data->eat_time);
 }
 
-void philo_sleep(t_philo *philo)
+
+
+void	sleep_philo(t_philo *philo)
 {
+	if (check_anyone_dead(philo) || check_death(philo))
+		return ;
 	print_message(philo, "is sleeping");
-	ft_sleep_ms(data->sleep_time);
+	ft_usleep_ms(philo->data->sleep_time);
 }

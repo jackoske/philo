@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: Jskehan <jskehan@student.42Berlin.de>      +#+  +:+       +#+         #
+#    By: Jskehan <jskehan@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/20 10:38:25 by Jskehan           #+#    #+#              #
-#    Updated: 2024/04/22 20:13:14 by Jskehan          ###   ########.fr        #
+#    Updated: 2024/05/03 17:44:03 by Jskehan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,11 +17,14 @@ CFLAGS = -Wall -Wextra -Werror -Iincludes/ -g
 SRC = main.c \
 		utils.c \
 		init.c \
-		simulation.c \
 		routine.c \
+		routine_parts.c \
 		routine_die.c \
 		print.c \
 		monitor.c \
+		forks.c \
+		destroy.c \
+		threads.c
 
 
 SRC := $(addprefix src/, $(SRC))

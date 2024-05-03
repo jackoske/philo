@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Jskehan <jskehan@student.42Berlin.de>      +#+  +:+       +#+        */
+/*   By: Jskehan <jskehan@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 11:33:02 by Jskehan           #+#    #+#             */
-/*   Updated: 2024/04/23 11:12:10 by Jskehan          ###   ########.fr       */
+/*   Updated: 2024/05/03 16:36:48 by Jskehan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,13 @@ int	convert_time_to_ms(struct timeval time)
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
-int ft_get_time_diff(struct timeval start, struct timeval end)
+int get_time_diff_ms(struct timeval start)
 {
-	return (convert_time_to_ms(end) - convert_time_to_ms(start));
+	struct timeval	now;
+
+	gettimeofday(&now, NULL);
+	return (convert_time_to_ms(now) - convert_time_to_ms(start));
+	
 }
 
 int	ft_atoi(const char *str)
@@ -45,7 +49,7 @@ int	ft_atoi(const char *str)
 	}
 	return (sign * nbr);
 }
-void	ft_usleep_ms(int ms)
+void	ft_sleep_ms(int ms)
 {
 	usleep(ms * 1000);
 }

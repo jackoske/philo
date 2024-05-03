@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Jskehan <jskehan@student.42Berlin.de>      +#+  +:+       +#+        */
+/*   By: Jskehan <jskehan@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 11:33:02 by Jskehan           #+#    #+#             */
-/*   Updated: 2024/04/23 11:12:10 by Jskehan          ###   ########.fr       */
+/*   Updated: 2024/05/03 17:22:15 by Jskehan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,14 @@ int	convert_time_to_ms(struct timeval time)
 int ft_get_time_diff(struct timeval start, struct timeval end)
 {
 	return (convert_time_to_ms(end) - convert_time_to_ms(start));
+}
+
+int ft_get_time(struct timeval start)
+{
+	struct timeval	now;
+
+	gettimeofday(&now, NULL);
+	return (ft_get_time_diff(start, now));
 }
 
 int	ft_atoi(const char *str)

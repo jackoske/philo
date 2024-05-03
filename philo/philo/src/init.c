@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Jskehan <jskehan@student.42Berlin.de>      +#+  +:+       +#+        */
+/*   By: Jskehan <jskehan@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 11:31:47 by Jskehan           #+#    #+#             */
-/*   Updated: 2024/04/22 19:18:42 by Jskehan          ###   ########.fr       */
+/*   Updated: 2024/05/03 18:18:59 by Jskehan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,15 @@ int	init_data(t_data *data, int argc, char **argv)
 	data->die_time = ft_atoi(argv[2]);
 	data->eat_time = ft_atoi(argv[3]);
 	data->sleep_time = ft_atoi(argv[4]);
-	data->eat_count = -1;
+	data->num_of_meals = -1;
 	if (argc == 6)
-		data->eat_count = ft_atoi(argv[5]);
+		data->num_of_meals = ft_atoi(argv[5]);
 	if (data->philo_count < 1 || data->die_time < 1 || data->eat_time < 1
-		|| data->sleep_time < 1 || (argc == 6 && data->eat_count < 1))
+		|| data->sleep_time < 1 || (argc == 6 && data->num_of_meals < 1))
 		return (1);
 	data->dead = 0;
 	pthread_mutex_init(&data->dead_mutex, NULL);
 	pthread_mutex_init(&data->write_mutex, NULL);
-	pthread_mutex_init(&data->eat_mutex, NULL);
 	data->forks = malloc(sizeof(t_fork) * data->philo_count);
 	if (!data->forks)
 		return (1);
@@ -39,6 +38,7 @@ int	init_data(t_data *data, int argc, char **argv)
 	gettimeofday(&data->start_time, NULL);
 	return (0);
 }
+
 int	init_philos(t_data *data, t_philo **philos)
 {
 	int	i;

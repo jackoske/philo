@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: Jskehan <jskehan@student.42Berlin.de>      +#+  +:+       +#+         #
+#    By: Jskehan <jskehan@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/20 10:38:25 by Jskehan           #+#    #+#              #
-#    Updated: 2024/05/03 13:18:43 by Jskehan          ###   ########.fr        #
+#    Updated: 2024/05/03 16:41:46 by Jskehan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -Iincludes/ -g
+CFLAGS = -Wall -Wextra -Werror -Iincludes -g
 SRC = main.c \
 		utils.c \
 		init.c \
@@ -21,7 +21,7 @@ SRC = main.c \
 		thread.c \
 		routine.c \
 		routine_parts.c \
-		# simulation.c \
+		forks.c \
 
 
 SRC := $(addprefix src/, $(SRC))

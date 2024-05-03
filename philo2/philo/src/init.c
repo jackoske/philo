@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Jskehan <jskehan@student.42Berlin.de>      +#+  +:+       +#+        */
+/*   By: Jskehan <jskehan@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 11:31:47 by Jskehan           #+#    #+#             */
-/*   Updated: 2024/05/03 12:35:01 by Jskehan          ###   ########.fr       */
+/*   Updated: 2024/05/03 16:27:01 by Jskehan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ int	init_data(t_data *data, int argc, char **argv)
 	data->die_time = ft_atoi(argv[2]);
 	data->eat_time = ft_atoi(argv[3]);
 	data->sleep_time = ft_atoi(argv[4]);
-	data->eat_count = -1;
+	data->num_of_meals = -1;
 	if (argc == 6)
-		data->eat_count = ft_atoi(argv[5]);
+		data->num_of_meals = ft_atoi(argv[5]);
 	if (data->philo_count < 1 || data->die_time < 1 || data->eat_time < 1
-		|| data->sleep_time < 1 || (argc == 6 && data->eat_count < 1))
+		|| data->sleep_time < 1 || (argc == 6 && data->num_of_meals < 1))
 		return (1);
 	data->dead = 0;
 	pthread_mutex_init(&data->dead_mutex, NULL);
