@@ -6,7 +6,7 @@
 /*   By: Jskehan <jskehan@student.42Berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 11:52:36 by Jskehan           #+#    #+#             */
-/*   Updated: 2024/04/23 11:24:42 by Jskehan          ###   ########.fr       */
+/*   Updated: 2024/05/03 11:56:22 by Jskehan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,35 @@ static void	*philo_routine(void *arg)
 	philo = (t_philo *)arg;
 	if (philo->data->philo_count == 1)
 		return (handle_one_philo(philo));
-	while (!check_death(philo))
+	while (!philo->data->dead)
 	{
 		think(philo);
 		pick_up_forks(philo);
-		eat(philo);
-		put_down_forks(philo);
-		sleep_philo(philo);
+		if (!philo->data->dead)
+		{
+			eat(philo);
+			put_down_forks(philo);
+			sleep_philo(philo);
+		}
+		else
+		{
+			put_down_forks(philo);
+		}
 	}
 	return (NULL);
 }
 
 int	start_simulation(t_data *data, t_philo *philos)
 {
-	int	i;
-	pthread_t monitor_thread;
+	int			i;
+	pthread_t	monitor_thread;
 
 	i = -1;
+	if (pthread_create(&monitor_thread, NULL, monitor_routine, philos))
+	{
+		printf("Error: Monitor thread creation failed\n");
+		return (1);
+	}
 	while (++i < data->philo_count)
 	{
 		if (pthread_create(&philos[i].thread, NULL, philo_routine, &philos[i]))
@@ -53,9 +65,9 @@ int	start_simulation(t_data *data, t_philo *philos)
 			return (1);
 		}
 	}
-	if (pthread_create(&monitor_thread, NULL, monitor_routine, philos))
+	if (pthread_join(monitor_thread, NULL))
 	{
-		printf("Error: Monitor thread creation failed\n");
+		printf("Error: Monitor thread join failed\n");
 		return (1);
 	}
 	i = -1;
@@ -66,11 +78,6 @@ int	start_simulation(t_data *data, t_philo *philos)
 			printf("Error: Thread join failed\n");
 			return (1);
 		}
-	}
-	if (pthread_join(monitor_thread, NULL))
-	{
-		printf("Error: Monitor thread join failed\n");
-		return (1);
 	}
 	return (0);
 }

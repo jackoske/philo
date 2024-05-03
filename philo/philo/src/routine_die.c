@@ -6,28 +6,28 @@
 /*   By: Jskehan <jskehan@student.42Berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:59:18 by Jskehan           #+#    #+#             */
-/*   Updated: 2024/04/23 11:25:59 by Jskehan          ###   ########.fr       */
+/*   Updated: 2024/05/03 11:57:13 by Jskehan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
-int check_death(t_philo *philo)
+
+int	check_death(t_philo *philo)
 {
-		pthread_mutex_lock(&philo->data->dead_mutex);
-		if (philo->data->dead)
-		{
-			pthread_mutex_unlock(&philo->data->dead_mutex);
-			return (1);
-		}
+	pthread_mutex_lock(&philo->data->dead_mutex);
+	if (philo->data->dead)
+	{
 		pthread_mutex_unlock(&philo->data->dead_mutex);
-		return (0);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->data->dead_mutex);
+	return (0);
 }
 
-
-//checks if current philo is dead
-int philo_dead(t_philo *philo)
+// checks if current philo is dead
+int	philo_dead(t_philo *philo)
 {
-	struct timeval current_time;
+	struct timeval	current_time;
 
 	gettimeofday(&current_time, NULL);
 	if (ft_get_time_diff(philo->last_eat, current_time) > philo->data->die_time)
@@ -40,8 +40,8 @@ int philo_dead(t_philo *philo)
 	}
 	return (0);
 }
-//check if any philo is dead
-int check_all(t_philo *philos)
+// check if any philo is dead
+int	check_all(t_philo *philos)
 {
 	int	i;
 
@@ -54,8 +54,8 @@ int check_all(t_philo *philos)
 	}
 	return (0);
 }
-//checks if philo ate number of meals in data compared to eat_count
-int check_if_all_ate(t_philo *philos)
+// checks if philo ate number of meals in data compared to eat_count
+int	check_if_all_ate(t_philo *philos)
 {
 	int	i;
 
@@ -71,18 +71,24 @@ int check_if_all_ate(t_philo *philos)
 	return (1);
 }
 
-void *monitor_routine(void *arg)
+void	*monitor_routine(void *arg)
 {
-	t_philo	*philos;
+	t_data	*data;
+	int		i;
 
-	philos = (t_philo *)arg;
+	data = (t_data *)arg;
 	while (1)
 	{
-		printf("monitor\n");
-		printf("dead: %d\n", philos->data->dead);
-		printf("eat_count: %d\n", philos->data->eat_count);
-		if (check_if_all_ate(philos) || check_all(philos))
-			break ;
+		i = 0;
+		while (i < data->philo_count)
+		{
+			if (check_if_philo_died(&data->philos[i]))
+			{
+				data->dead = 1;
+				return (NULL);
+			}
+			i++;
+		}
 	}
-	return (arg);
+	return (NULL);
 }
