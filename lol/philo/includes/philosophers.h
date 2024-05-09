@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: Jskehan <jskehan@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/18 17:57:38 by zmoussam          #+#    #+#             */
-/*   Updated: 2024/05/09 16:58:32 by Jskehan          ###   ########.fr       */
+/*   Created: 2024/05/09 17:23:08 by Jskehan           #+#    #+#             */
+/*   Updated: 2024/05/09 17:23:10 by Jskehan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ typedef struct s_philos
 	t_data			data;
 }	t_philos;
 
+
+// Validation and Initialization Functions
 int			validation(char **argv);
 int			get_data_to_int(char **argv, t_data *philos_info);
 int			check_empty_arg(char **argv);
@@ -51,13 +53,20 @@ int			start_philosophers(t_philos *philosophers);
 int			init_philo(t_philos *philos, t_data philo_info);
 int			init_forks(t_philos *philos);
 int			init_mutex(t_philos *philos);
+void		init_mutex_msg(t_philos *philosophers);
+
+// Routine Functions
 void		*routine(void *arg);
+void		*routine_for_one(void *arg);
+
+// Utility Functions
 long long	get_time(void);
 int			ft_isdigit(int c);
 int			ft_atoi(const char *str);
 void		ft_usleep(int time_to_sleep, long long exec_time, t_philos *philo);
-void		init_mutex_msg(t_philos *philosophers);
 void		ft_free(t_philos *philo_info);
+
+// Philosopher Actions
 void		check_time_to_starve(t_philos *philo);
 void		take_left_fork(t_philos *philo);
 void		take_right_fork(t_philos *philo);
@@ -65,7 +74,8 @@ int			is_eating(t_philos *philo);
 void		is_sleeping(t_philos *philo);
 void		is_thinking(t_philos *philo);
 int			if_there_is_one_philo(t_philos *philo);
-void		*routine_for_one(void *arg);
+
+// Wait Function
 void		wait_philosophers(t_philos *philos, int nbr_of_meal);
 
 #endif
