@@ -5,40 +5,52 @@
 #                                                     +:+ +:+         +:+      #
 #    By: Jskehan <jskehan@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/04/20 10:38:25 by Jskehan           #+#    #+#              #
-#    Updated: 2024/05/03 17:44:03 by Jskehan          ###   ########.fr        #
+#    Created: 2024/05/09 17:23:00 by Jskehan           #+#    #+#              #
+#    Updated: 2024/05/09 19:19:50 by Jskehan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
-CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -Iincludes/ -g
+SRC_DIR = ./src/
+OBJ_DIR = ./obj/
+
 SRC = main.c \
-		utils.c \
-		init.c \
-		routine.c \
-		routine_parts.c \
-		routine_die.c \
-		print.c \
-		monitor.c \
-		forks.c \
-		destroy.c \
-		threads.c
+	init.c \
+	validation.c \
+	routine.c \
+	utils.c \
+	routine_parts.c \
+	monitor.c \
+	simulation.c
 
+OBJ = $(patsubst %.c,$(OBJ_DIR)%.o,$(SRC))
 
-SRC := $(addprefix src/, $(SRC))
+CC = cc
+RM = rm -rf
+CFLAGS =  -Wall -Wextra -Werror 
 
 all: $(NAME)
 
-$(NAME): $(SRC)
-	$(CC) $(CFLAGS) $(SRC) -o $(NAME) -lpthread
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c
+	@mkdir -p $(OBJ_DIR)
+	@$(CC) -c  $(CFLAGS) $< -o $@
+
+$(NAME): $(OBJ)
+	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+	@echo "Compiling Successful"
+
+debug: CFLAGS += -g -fsanitize=address
+debug: re
+	@echo "Debugging Mode built Successfully"
+
 
 clean:
+	@$(RM) $(OBJ_DIR)
+	@echo "Object Files Removed Successfully"
 
 fclean: clean
-	rm -f $(NAME)
+	@$(RM) $(NAME)
+	@echo "Clear"
 
 re: fclean all
-
-.PHONY: all clean fclean re

@@ -6,7 +6,7 @@
 #    By: Jskehan <jskehan@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/09 17:23:00 by Jskehan           #+#    #+#              #
-#    Updated: 2024/05/09 18:59:12 by Jskehan          ###   ########.fr        #
+#    Updated: 2024/05/09 19:16:04 by Jskehan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ SRC = main.c \
 	validation.c \
 	routine.c \
 	utils.c \
-	routine_func.c \
+	routine_parts.c \
 	monitor.c
 
 OBJ = $(patsubst %.c,$(OBJ_DIR)%.o,$(SRC))
