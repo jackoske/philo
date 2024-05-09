@@ -6,7 +6,7 @@
 /*   By: Jskehan <jskehan@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 17:22:55 by Jskehan           #+#    #+#             */
-/*   Updated: 2024/05/09 17:25:51 by Jskehan          ###   ########.fr       */
+/*   Updated: 2024/05/09 18:53:14 by Jskehan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	if_there_is_one_philo(t_philos *philo)
 		philo->time = get_time();
 		if (pthread_create(&(philo->philo), NULL, &routine_for_one, philo))
 		{
-			pthread_mutex_lock(philo->msg);
-			printf("philosopher %d was not created!!!\n", 1);
+			pthread_mutex_lock(philo->write);
+			printf("Philosopher %d thread failed to be created\n", 1);
 			return (0);
 		}
 		return (0);
@@ -39,10 +39,10 @@ int	start_philosophers(t_philos *philosophers)
 	{
 		philosophers[i].time = get_time();
 		philosophers[i].time_of_last_meal = philosophers[i].time;
-		if (pthread_create(&((philosophers[i]).philo), NULL, &routine, \
-			&philosophers[i]) || pthread_detach(philosophers[i].philo))
+		if (pthread_create(&((philosophers[i]).philo), NULL, &routine,
+				&philosophers[i]) || pthread_detach(philosophers[i].philo))
 		{
-			pthread_mutex_lock(philosophers->msg);
+			pthread_mutex_lock(philosophers->write);
 			printf("philosopher %d was not created!!!\n", i + 1);
 			return (1);
 		}
@@ -59,7 +59,8 @@ int	init_philo(t_philos *philos, t_data philo_info)
 	philos->check_die = (int *)malloc(sizeof(int));
 	philos->count_meal = (int *)malloc(sizeof(int));
 	if (philos->check_die == NULL || philos->count_meal == NULL)
-		return (write(1, "memory was not allocated!!\n", 27));
+		return (write(1, "Error: Failed to allocate memory "
+				"for philosopher status.\n", 58));
 	philos->check_die[0] = 1;
 	philos->count_meal[0] = 0;
 	while (i < philo_info.n_philos)
@@ -82,10 +83,10 @@ int	init_forks(t_philos *philo)
 	i = 0;
 	while (i < philo->data.n_philos)
 	{
-		philo[i].left_fork = \
-					(pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
+		philo[i].left_fork = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
 		if (philo[i].left_fork == NULL)
-			return (write(1, "memory was not allocated!!\n", 27));
+			return (write(1,
+					"Error: Failed to allocate memory for left fork.\n", 48));
 		pthread_mutex_init(philo[i].left_fork, NULL);
 		i++;
 	}
@@ -106,17 +107,18 @@ int	init_mutex(t_philos *philos)
 	int	i;
 
 	i = 0;
-	philos->msg = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
+	philos->write = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
 	philos->die = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
 	philos->meals = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
-	if (philos->msg == NULL || philos->die == NULL || philos->meals == NULL)
-		return (write(1, "memory was not allocated!!\n", 27));
-	pthread_mutex_init(philos->msg, NULL);
+	if (philos->write == NULL || philos->die == NULL || philos->meals == NULL)
+		return (write(1, "Error: Failed to allocate memory for mutexes.\n",
+				47));
+	pthread_mutex_init(philos->write, NULL);
 	pthread_mutex_init(philos->die, NULL);
 	pthread_mutex_init(philos->meals, NULL);
 	while (i < philos->data.n_philos)
 	{
-		philos[i].msg = philos->msg;
+		philos[i].write = philos->write;
 		philos[i].die = philos->die;
 		philos[i].meals = philos->meals;
 		i++;

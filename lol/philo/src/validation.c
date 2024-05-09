@@ -6,7 +6,7 @@
 /*   By: Jskehan <jskehan@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 17:22:29 by Jskehan           #+#    #+#             */
-/*   Updated: 2024/05/09 17:25:50 by Jskehan          ###   ########.fr       */
+/*   Updated: 2024/05/09 18:40:40 by Jskehan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	validation(char **argv)
 		{
 			if (!ft_isdigit(argv[i][j]) && argv[i][j] > 32)
 			{
-				printf("error : arg invalide!!\n");
+				printf("Error: Invalid argument '%s'\n", argv[i]);
 				return (0);
 			}
 			j++;
@@ -45,7 +45,7 @@ int	check_empty_arg(char **argv)
 	{
 		if (argv[i][0] == '\0')
 		{
-			write(1, "empty argument!!\n", 17);
+			write(1, "Empty argument\n", 16);
 			return (0);
 		}
 		i++;
@@ -74,7 +74,7 @@ int	get_data_to_int(char **argv, t_data *philos_info)
 		|| philos_info->eat_time < 0 || philos_info->sleep_time < 0
 		|| philos_info->meals_to_eat < 0)
 	{
-		printf("error : arg invalide!! --> nombre long\n");
+		printf("Error: Invalid argument value\n");
 		return (0);
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: Jskehan <jskehan@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 17:22:35 by Jskehan           #+#    #+#             */
-/*   Updated: 2024/05/09 17:22:36 by Jskehan          ###   ########.fr       */
+/*   Updated: 2024/05/09 19:09:40 by Jskehan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,26 @@ void	ft_usleep(int time_to_sleep, long long exec_time, t_philos *philo)
 		if (((get_time() - exec_time)) >= time_to_sleep)
 			break ;
 	}
+}
+
+void	ft_free(t_philos *philo_info)
+{
+	int	i;
+
+	i = 0;
+	pthread_mutex_destroy(philo_info[i].meals);
+	pthread_mutex_destroy(philo_info[i].write);
+	pthread_mutex_destroy(philo_info[i].die);
+	while (i < philo_info->data.n_philos)
+	{
+		pthread_mutex_destroy(philo_info[i].left_fork);
+		free(philo_info[i].left_fork);
+		i++;
+	}
+	free(philo_info->write);
+	free(philo_info->die);
+	free(philo_info->meals);
+	free(philo_info->check_die);
+	free(philo_info->count_meal);
+	free(philo_info);
 }

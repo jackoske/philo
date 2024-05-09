@@ -6,7 +6,7 @@
 /*   By: Jskehan <jskehan@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 17:23:08 by Jskehan           #+#    #+#             */
-/*   Updated: 2024/05/09 17:26:04 by Jskehan          ###   ########.fr       */
+/*   Updated: 2024/05/09 18:31:05 by Jskehan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,28 +31,28 @@ typedef struct s_data
 typedef struct s_philos
 {
 	int				id;
-	pthread_mutex_t	*left_fork;
-	pthread_mutex_t	*right_fork;
-	pthread_mutex_t	*msg;
-	pthread_mutex_t	*die;
-	pthread_mutex_t	*meals;
 	int				*check_die;
 	int				*count_meal;
+	pthread_mutex_t	*left_fork;
+	pthread_mutex_t	*right_fork;
+	pthread_mutex_t	*die;
+	pthread_mutex_t	*meals;
+	pthread_mutex_t	*write;
 	long			time_of_last_meal;
-	pthread_t		philo;
 	long			time;
+	pthread_t		philo;
 	t_data			data;
 }					t_philos;
 
 // Validation and Initialization Functions
-int					validation(char **argv);
-int					get_data_to_int(char **argv, t_data *philos_info);
-int					check_empty_arg(char **argv);
-int					start_philosophers(t_philos *philosophers);
-int					init_philo(t_philos *philos, t_data philo_info);
+void				init_mutex_write(t_philos *philosophers);
 int					init_forks(t_philos *philos);
 int					init_mutex(t_philos *philos);
-void				init_mutex_msg(t_philos *philosophers);
+int					init_philo(t_philos *philos, t_data philo_info);
+int					validation(char **argv);
+int					check_empty_arg(char **argv);
+int					get_data_to_int(char **argv, t_data *philos_info);
+int					start_philosophers(t_philos *philosophers);
 
 // Routine Functions
 void				*routine(void *arg);
@@ -68,14 +68,13 @@ void				ft_free(t_philos *philo_info);
 
 // Philosopher Actions
 void				check_time_to_starve(t_philos *philo);
-void				take_left_fork(t_philos *philo);
-void				take_right_fork(t_philos *philo);
+void				take_fork(t_philos *philo, pthread_mutex_t *fork);
 int					is_eating(t_philos *philo);
 void				is_sleeping(t_philos *philo);
 void				is_thinking(t_philos *philo);
 int					if_there_is_one_philo(t_philos *philo);
 
 // Wait Function
-void				wait_philosophers(t_philos *philos, int nbr_of_meal);
+void				monitor_philosophers(t_philos *philos, int nbr_of_meal);
 
 #endif
