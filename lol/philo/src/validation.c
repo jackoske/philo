@@ -6,7 +6,7 @@
 /*   By: Jskehan <jskehan@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 17:22:29 by Jskehan           #+#    #+#             */
-/*   Updated: 2024/05/09 17:22:31 by Jskehan          ###   ########.fr       */
+/*   Updated: 2024/05/09 17:25:50 by Jskehan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ int	get_data_to_int(char **argv, t_data *philos_info)
 {
 	if (!check_empty_arg(argv))
 		return (0);
-	philos_info->n_philosophers = ft_atoi(argv[1]);
-	if (philos_info->n_philosophers == 0)
+	philos_info->n_philos = ft_atoi(argv[1]);
+	if (philos_info->n_philos == 0)
 		return (0);
 	philos_info->time_to_starve = ft_atoi(argv[2]);
 	philos_info->eat_time = ft_atoi(argv[3]);
@@ -70,7 +70,7 @@ int	get_data_to_int(char **argv, t_data *philos_info)
 		if (philos_info->meals_to_eat == 0)
 			return (0);
 	}
-	if (philos_info->n_philosophers < 0 || philos_info->time_to_starve < 0
+	if (philos_info->n_philos < 0 || philos_info->time_to_starve < 0
 		|| philos_info->eat_time < 0 || philos_info->sleep_time < 0
 		|| philos_info->meals_to_eat < 0)
 	{

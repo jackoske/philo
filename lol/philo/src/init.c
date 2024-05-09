@@ -6,7 +6,7 @@
 /*   By: Jskehan <jskehan@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 17:22:55 by Jskehan           #+#    #+#             */
-/*   Updated: 2024/05/09 17:22:55 by Jskehan          ###   ########.fr       */
+/*   Updated: 2024/05/09 17:25:51 by Jskehan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	if_there_is_one_philo(t_philos *philo)
 {
-	if (philo->data.n_philosophers == 1)
+	if (philo->data.n_philos == 1)
 	{
 		philo->time = get_time();
 		if (pthread_create(&(philo->philo), NULL, &routine_for_one, philo))
@@ -35,7 +35,7 @@ int	start_philosophers(t_philos *philosophers)
 	i = 0;
 	if (!if_there_is_one_philo(philosophers))
 		return (0);
-	while (i < philosophers->data.n_philosophers)
+	while (i < philosophers->data.n_philos)
 	{
 		philosophers[i].time = get_time();
 		philosophers[i].time_of_last_meal = philosophers[i].time;
@@ -62,7 +62,7 @@ int	init_philo(t_philos *philos, t_data philo_info)
 		return (write(1, "memory was not allocated!!\n", 27));
 	philos->check_die[0] = 1;
 	philos->count_meal[0] = 0;
-	while (i < philo_info.n_philosophers)
+	while (i < philo_info.n_philos)
 	{
 		philos[i].data = philo_info;
 		philos[i].id = i + 1;
@@ -80,7 +80,7 @@ int	init_forks(t_philos *philo)
 	int	i;
 
 	i = 0;
-	while (i < philo->data.n_philosophers)
+	while (i < philo->data.n_philos)
 	{
 		philo[i].left_fork = \
 					(pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
@@ -90,10 +90,10 @@ int	init_forks(t_philos *philo)
 		i++;
 	}
 	i = 0;
-	while (i < philo->data.n_philosophers)
+	while (i < philo->data.n_philos)
 	{
 		if (i == 0)
-			philo[i].right_fork = philo[philo->data.n_philosophers - 1].left_fork;
+			philo[i].right_fork = philo[philo->data.n_philos - 1].left_fork;
 		else
 			philo[i].right_fork = philo[i - 1].left_fork;
 		i++;
@@ -114,7 +114,7 @@ int	init_mutex(t_philos *philos)
 	pthread_mutex_init(philos->msg, NULL);
 	pthread_mutex_init(philos->die, NULL);
 	pthread_mutex_init(philos->meals, NULL);
-	while (i < philos->data.n_philosophers)
+	while (i < philos->data.n_philos)
 	{
 		philos[i].msg = philos->msg;
 		philos[i].die = philos->die;
