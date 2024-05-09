@@ -6,12 +6,11 @@
 /*   By: Jskehan <jskehan@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 19:18:20 by Jskehan           #+#    #+#             */
-/*   Updated: 2024/05/09 19:19:40 by Jskehan          ###   ########.fr       */
+/*   Updated: 2024/05/09 19:28:01 by Jskehan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
-
 
 int	if_there_is_one_philo(t_philos *philo)
 {
